@@ -26,16 +26,12 @@ wheels/
 MANIFEST
 
 # Model files (large files)
-*.h5
 *.hdf5
-*.pkl
 *.pickle
 *.pb
 *.onnx
 *.pt
 *.pth
-models/
-model/
 
 # Data files
 *.db
