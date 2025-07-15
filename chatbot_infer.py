@@ -17,7 +17,7 @@ def clean_text(text):
 
 def load_model_and_tokenizer():
     try:
-        model = tf.keras.models.load_model('models/Catbot_compile.h5')
+        model = tf.keras.models.load_model('models/chatbot_compile.h5')
         with open('models/tokenizer.pkl', 'rb') as f:
             tokenizer = pickle.load(f)
         return model, tokenizer

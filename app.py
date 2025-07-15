@@ -27,7 +27,7 @@ def load_model_and_tokenizer():
     """Load the trained model and tokenizer"""
     global model, tokenizer
     try:
-        model = tf.keras.models.load_model('models/Catbot_compile.h5')
+        model = tf.keras.models.load_model('models/chatbot_compile.h5')
         with open('models/tokenizer.pkl', 'rb') as f:
             tokenizer = pickle.load(f)
         return True
@@ -100,6 +100,9 @@ def generate_response(input_text, max_length=20):
                         break
         
         response = ' '.join(response_words)
+        # Clean up special tokens
+        response = re.sub(r'newlinechar|<OOV>', ' ', response).strip()
+        response = re.sub(r'\s+', ' ', response)
         if not response or response.strip() == '' or len(response.split()) < 2:
             return "I'm still learning to respond properly."
         return response
@@ -111,6 +114,10 @@ def generate_response(input_text, max_length=20):
 def home():
     """Render the main chat interface"""
     return render_template('index.html')
+
+@app.route('/webchat')
+def webchat():
+    return render_template('chat.html')
 
 @app.route('/chat', methods=['POST'])
 def chat():

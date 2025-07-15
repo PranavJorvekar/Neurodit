@@ -32,13 +32,16 @@ MANIFEST
 *.onnx
 *.pt
 *.pth
+# Keep the models/ directory, but not large files
+# !models/
 
 # Data files
 *.db
 *.sqlite
 *.sqlite3
-data/
-reddit_data/
+# Keep the data/ and reddit_data/ directories, but not large files
+# !data/
+# !reddit_data/
 
 # Jupyter Notebook
 .ipynb_checkpoints

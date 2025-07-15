@@ -22,7 +22,7 @@ def check_dependencies():
 
 def check_model_files():
     """Check if model files exist"""
-    model_file = "models/Catbot_compile.h5"
+    model_file = "models/Chatbot_compile.h5"
     tokenizer_file = "models/tokenizer.pkl"
     
     if not os.path.exists(model_file):
