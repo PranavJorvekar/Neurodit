@@ -1,100 +1,165 @@
-# Catbot - Neural Network Chatbot (Backend Only)
+# Catbot - AI Chatbot by Pranav Jorvekar
 
-A neural network-based conversational AI trained on Reddit data, featuring a Flask backend for model inference and a simple web chat interface.
+An advanced AI chatbot trained on Reddit conversations, built with React frontend and Flask backend.
 
 ## 🚀 Features
 
-- **Neural Network Model**: Bidirectional LSTM with attention mechanism
-- **Flask Backend**: RESTful API for model inference
-- **Web Chat Interface**: Simple, modern chat UI at `/webchat`
-- **Easy Deployment**: Run everything with Python and Flask
+- **AI-Powered Chat**: Real-time conversations with a deep learning model
+- **Modern UI**: Beautiful React interface with shadcn/ui components
+- **Full-Stack**: Flask backend with TensorFlow/Keras AI model
+- **Automated Setup**: Single npm command to start everything
+- **Development & Production**: Both modes supported
 
-## 📁 Project Structure
+## 🛠️ Tech Stack
+
+### Frontend
+- **React 18** with TypeScript
+- **Vite** for fast development and building
+- **shadcn/ui** for beautiful components
+- **Tailwind CSS** for styling
+
+### Backend
+- **Flask** web framework
+- **TensorFlow/Keras** for AI model
+- **Python** with NumPy for data processing
+
+### AI Model
+- **Deep Learning**: LSTM-based sequence model
+- **Training Data**: Reddit conversations (2008-2015)
+- **Response Generation**: Temperature sampling with top-k selection
+
+## 📦 Quick Start
+
+### Prerequisites
+- **Node.js & npm** - [Install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Python 3.8+** with pip
+- **TensorFlow** and other Python dependencies
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <YOUR_GIT_URL>
+   cd Chatbot
+   ```
+
+2. **Install dependencies**
+   ```bash
+   # Frontend dependencies
+   npm install
+   
+   # Backend dependencies (if requirements.txt exists)
+   pip install -r requirements.txt
+   ```
+
+3. **Start the application**
+   ```bash
+   # Development mode (frontend + backend)
+   npm run start:dev
+   
+   # Production mode (built frontend + backend)
+   npm run start
+   ```
+
+4. **Open your browser**
+   - Development: [http://localhost:8082](http://localhost:8082) (or port shown in terminal)
+   - Production: [http://localhost:5000](http://localhost:5000)
+
+## 🎯 Available Commands
+
+```bash
+# Development
+npm run start:dev    # Start both frontend and backend
+npm run dev          # Frontend only (Vite dev server)
+npm run backend:dev  # Backend only (Flask with debug)
+
+# Production
+npm run start        # Build frontend + start backend
+npm run build        # Build frontend only
+npm run backend      # Backend only (production mode)
+
+# Utilities
+npm run lint         # Run ESLint
+npm run preview      # Preview built frontend
+```
+
+## 🏗️ Project Structure
 
 ```
 Chatbot/
-├── app.py                 # Flask backend (serves API and web interface)
-├── chatbot_infer.py       # Model inference script (CLI)
-├── models/                # Model files (not in repo)
+├── src/                    # React frontend source
+│   ├── components/         # React components
+│   │   ├── CatbotInterface.tsx  # Main chat interface
+│   │   └── ui/            # shadcn/ui components
+│   ├── pages/             # Page components
+│   ├── lib/               # Utilities
+│   └── main.tsx           # App entry point
+├── models/                # AI model files
 │   ├── chatbot_compile.h5 # Trained model
-│   └── tokenizer.pkl      # Tokenizer
-├── data/                  # Training/test data
-├── training/              # Training scripts
-├── templates/             # Flask HTML templates (chat.html)
-├── requirements_web.txt   # Python dependencies
-├── docs/                  # Documentation
-└── ...
+│   └── tokenizer.pkl      # Text tokenizer
+├── static/                # Static assets
+│   └── dist/              # Built frontend (auto-copied)
+├── app.py                 # Flask backend
+├── start_web.py           # Backend launcher
+├── index.html             # Frontend entry point
+└── package.json           # NPM scripts and dependencies
 ```
 
-## 🛠️ Setup Instructions
+## 🤖 AI Model Details
 
-### Prerequisites
-- Python 3.8+
+- **Architecture**: Bidirectional LSTM → LSTM → Dense layers
+- **Training**: 10M+ Reddit comments with score ≥ 2
+- **Vocabulary**: Optimized with frequency filtering
+- **Response Generation**: Temperature sampling (0.8) with top-k (10)
+- **Performance**: 67.3% validation accuracy
 
-### 1. Clone the Repository
+## 🔧 Development
+
+### Frontend Development
+- Hot reload with Vite
+- TypeScript for type safety
+- shadcn/ui component library
+- Tailwind CSS for styling
+
+### Backend Development
+- Flask debug mode for development
+- API endpoints: `/chat`, `/status`
+- Automatic model loading
+- Error handling and logging
+
+### API Endpoints
+
+- `POST /chat` - Send message, get AI response
+- `GET /status` - Check model loading status
+- `GET /` - Serve frontend application
+
+## 🚀 Deployment
+
+### Local Production
 ```bash
-git clone <your-repo-url>
-cd Chatbot
+npm run start
 ```
 
-### 2. Download Model Files
-- Place your trained model as `models/chatbot_compile.h5`
-- Place your tokenizer as `models/tokenizer.pkl`
+### Cloud Deployment
+1. Build the frontend: `npm run build`
+2. Deploy Flask backend to your preferred platform
+3. Ensure model files are accessible
+4. Configure environment variables if needed
 
-### 3. Setup Python Backend
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements_web.txt
-```
+## 📚 Documentation
 
-## 🚀 Running the Application
+- [Dataset Documentation](docs/DATASET_DOCUMENTATION.md) - Training data details
+- [Project Explained](docs/PROJECT_EXPLAINED.md) - Technical architecture
+- [Progress Log](docs/README_Progress.md) - Development history
 
-### 1. **Start Flask Backend**
-```bash
-python app.py
-```
-- Backend will run on: http://localhost:5000
+## 👨‍💻 Author
 
-### 2. **Access the Web Chat Interface**
-- Open your browser and go to: [http://localhost:5000/webchat](http://localhost:5000/webchat)
+**Pranav Jorvekar** - AI enthusiast and developer
 
-## 📝 API Endpoints
+## 📄 License
 
-### POST /chat
-Send a message to the chatbot.
-
-**Request**:
-```json
-{
-  "message": "Hello, how are you?"
-}
-```
-**Response**:
-```json
-{
-  "response": "I'm doing well, thank you for asking! How about you?"
-}
-```
-
-## 🧠 Model Information
-- **Architecture**: Bidirectional LSTM with attention
-- **Training Data**: Reddit conversations (2008-2015)
-- **Model File**: `models/chatbot_compile.h5`
-- **Tokenizer**: `models/tokenizer.pkl`
-
-## 🛠️ Development & Training
-- See `training/` for scripts to retrain the model
-- See `chatbot_infer.py` for CLI-based chat
-
-## 📄 Documentation
-- See `docs/` for detailed explanations, dataset info, and progress
-
-## 📣 Support
-If you encounter any issues:
-1. Check the [Issues] page (if using GitHub)
-2. Create a new issue with detailed information
-3. Include error messages and system information
+This project is for educational and demonstration purposes.
 
 ---
-**Note**: Make sure to download the model files before running the application. The model files are not included in the repository due to size limitations. 
+
+**Happy chatting with Catbot! 🤖✨**

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import os
 import warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -8,9 +8,8 @@ import tensorflow as tf
 import pickle
 import numpy as np
 import re
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # Global variables for model and tokenizer
 model = None
@@ -27,13 +26,29 @@ def load_model_and_tokenizer():
     """Load the trained model and tokenizer"""
     global model, tokenizer
     try:
+        print("Attempting to load model...")
         model = tf.keras.models.load_model('models/chatbot_compile.h5')
+        print("Model loaded successfully")
+        
+        print("Attempting to load tokenizer...")
         with open('models/tokenizer.pkl', 'rb') as f:
             tokenizer = pickle.load(f)
+        print("Tokenizer loaded successfully")
+        
         return True
     except Exception as e:
-        print(f"❌ Error loading model/tokenizer: {e}")
+        print(f"Error loading model/tokenizer: {e}")
+        print(f"Error type: {type(e).__name__}")
+        import traceback
+        traceback.print_exc()
         return False
+
+# Load model when app is created
+print("Loading Catbot model...")
+if load_model_and_tokenizer():
+    print("Model loaded successfully!")
+else:
+    print("Failed to load model!")
 
 def generate_response(input_text, max_length=20):
     """Generate chatbot response"""
@@ -43,7 +58,7 @@ def generate_response(input_text, max_length=20):
         
         cleaned_input = clean_text(input_text)
         input_seq = tokenizer.texts_to_sequences([cleaned_input])
-        input_padded = pad_sequences(input_seq, maxlen=max_length, padding='post', truncating='post')
+        input_padded = tf.keras.preprocessing.sequence.pad_sequences(input_seq, maxlen=max_length, padding='post', truncating='post')
         prediction = model.predict(input_padded, verbose=0)
         
         # Use temperature sampling for more diverse outputs
@@ -111,13 +126,19 @@ def generate_response(input_text, max_length=20):
         return f"Sorry, I encountered an error: {str(e)}"
 
 @app.route('/')
-def home():
-    """Render the main chat interface"""
-    return render_template('index.html')
+def index():
+    # Serve the new SPA index.html from the project root
+    return send_from_directory('.', 'index.html')
+
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    # Serve static files from the static directory
+    return send_from_directory('static', filename)
 
 @app.route('/webchat')
 def webchat():
-    return render_template('chat.html')
+    # Optionally serve chat.html if still needed
+    return send_from_directory('templates', 'chat.html')
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -146,12 +167,5 @@ def status():
         return jsonify({'status': 'error', 'message': 'Model not loaded'})
 
 if __name__ == '__main__':
-    # Load model on startup
-    print("🤖 Loading Catbot model...")
-    if load_model_and_tokenizer():
-        print("✅ Model loaded successfully!")
-    else:
-        print("❌ Failed to load model!")
-    
-    print("🌐 Starting web server...")
+    print("Starting web server...")
     app.run(debug=True, host='0.0.0.0', port=5000) 

@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Dark Modern Theme */
+    --background: 220 13% 9%; /* Dark slate background */
+    --foreground: 220 9% 95%;
+
+    --card: 220 13% 12%;
+    --card-foreground: 220 9% 95%;
+
+    --popover: 220 13% 12%;
+    --popover-foreground: 220 9% 95%;
+
+    /* Cool Blue-Purple Gradient Theme */
+    --primary: 216 92% 60%; /* Bright blue #3B82F6 */
+    --primary-foreground: 220 9% 98%;
+    --primary-glow: 216 92% 70%;
+    --primary-dark: 216 92% 45%;
+    
+    /* Purple accent */
+    --secondary: 262 83% 58%; /* Purple #8B5CF6 */
+    --secondary-foreground: 220 9% 98%;
+    --secondary-glow: 262 83% 68%;
+
+    --muted: 220 13% 15%;
+    --muted-foreground: 220 9% 65%;
+
+    --accent: 220 13% 18%;
+    --accent-foreground: 220 9% 90%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 220 9% 98%;
+
+    --border: 220 13% 20%;
+    --input: 220 13% 18%;
+    --ring: 216 92% 60%;
+
+    /* Chat specific colors */
+    --chat-background: 220 13% 12%;
+    --chat-border: 220 13% 25%;
+    --user-message: 216 92% 60%;
+    --bot-message: 220 13% 18%;
+    
+    /* Advanced Gradients */
+    --gradient-header: linear-gradient(135deg, hsl(216 92% 60%), hsl(262 83% 58%), hsl(216 92% 45%));
+    --gradient-button: linear-gradient(135deg, hsl(216 92% 60%), hsl(216 92% 50%));
+    --gradient-card: linear-gradient(135deg, hsl(220 13% 15%), hsl(220 13% 18%));
+    --gradient-background: radial-gradient(ellipse at top, hsl(220 13% 12%), hsl(220 13% 9%));
+    --gradient-chat: linear-gradient(135deg, hsl(220 13% 12%), hsl(220 13% 15%));
+    
+    /* Glass Effects */
+    --glass-background: hsla(220, 13%, 15%, 0.8);
+    --glass-border: hsla(220, 9%, 95%, 0.1);
+    
+    /* Neon Glows */
+    --glow-primary: 0 0 20px hsl(216 92% 60% / 0.3);
+    --glow-secondary: 0 0 20px hsl(262 83% 58% / 0.3);
+    --glow-soft: 0 0 40px hsl(216 92% 60% / 0.1);
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(220 13% 5% / 0.3);
+    --shadow-medium: 0 8px 32px hsl(220 13% 5% / 0.4);
+    --shadow-strong: 0 12px 48px hsl(220 13% 5% / 0.6);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 220 13% 12%;
+    --sidebar-foreground: 220 9% 95%;
+    --sidebar-primary: 216 92% 60%;
+    --sidebar-primary-foreground: 220 9% 98%;
+    --sidebar-accent: 220 13% 18%;
+    --sidebar-accent-foreground: 220 9% 90%;
+    --sidebar-border: 220 13% 20%;
+    --sidebar-ring: 216 92% 60%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
