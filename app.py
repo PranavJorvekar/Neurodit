@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask_cors import CORS
 import os
 import warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -10,6 +11,9 @@ import numpy as np
 import re
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
+
+# Enable CORS for all routes
+CORS(app)
 
 # Global variables for model and tokenizer
 model = None

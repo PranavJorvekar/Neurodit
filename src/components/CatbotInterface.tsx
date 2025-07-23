@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { Send, Bot, User, Sparkles, Zap, Brain, Database } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Bot, User, Send, Brain, Database, Zap, Info } from 'lucide-react';
+import { api } from '@/lib/api';
 
 interface Message {
   id: string;
@@ -28,11 +31,11 @@ const CatbotInterface = () => {
     { id: 'model', label: 'Model', icon: Brain },
     { id: 'dataset', label: 'Dataset', icon: Database },
     { id: 'training', label: 'Training', icon: Zap },
-    { id: 'about', label: 'About', icon: Sparkles }
+    { id: 'about', label: 'About', icon: Info }
   ];
 
   const handleSendMessage = async () => {
-    if (!inputText.trim()) return;
+    if (!inputText.trim() || isTyping) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -46,12 +49,7 @@ const CatbotInterface = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch('/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: inputText })
-      });
-      const data = await response.json();
+      const data = await api.chat(inputText);
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: data.response || "Sorry, I didn't get that.",
@@ -271,7 +269,7 @@ const CatbotInterface = () => {
   const renderAbout = () => (
     <div className="space-y-8">
       <div className="flex items-center gap-3">
-        <Sparkles className="w-8 h-8 text-secondary" />
+        <Info className="w-8 h-8 text-secondary" />
         <h2 className="text-3xl font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
           About Catbot
         </h2>
@@ -340,7 +338,7 @@ const CatbotInterface = () => {
               <div>
                 <h1 className="text-5xl font-bold text-primary-foreground flex items-center gap-2">
                   Catbot
-                  <Sparkles className="w-8 h-8 text-secondary animate-pulse" />
+                  <Info className="w-8 h-8 text-secondary animate-pulse" />
                 </h1>
                 <p className="text-primary-foreground/90 mt-1 text-lg">AI Chatbot trained on Reddit conversations</p>
               </div>
@@ -398,7 +396,7 @@ const CatbotInterface = () => {
             <span className="text-sm text-muted-foreground">
               © 2025 Catbot — Created by Pranav Jorvekar
             </span>
-            <Sparkles className="w-4 h-4 text-secondary" />
+            <Info className="w-4 h-4 text-secondary" />
           </div>
           <p className="text-xs text-muted-foreground/70">
             Powered by deep learning and Reddit conversations

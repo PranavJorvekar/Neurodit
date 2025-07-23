@@ -1,0 +1,22 @@
+services:
+  # Python Backend Service
+  - type: web
+    name: neurodit-backend
+    env: python
+    buildCommand: pip install -r requirements_web.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 10000
+
+  # Node.js Frontend Service (Static Site)
+  - type: web
+    name: neurodit-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_VERSION
+        value: 18.0.0 
